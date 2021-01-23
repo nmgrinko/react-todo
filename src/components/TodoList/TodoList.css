@@ -1,0 +1,16 @@
+.todo-list .list-group-item {
+    padding: .25rem .75rem .25rem .90rem;
+}
+
+.list-group-item {
+    margin-bottom: 5px;
+    cursor: move;
+}
+
+.list-group .list-group-item.done {
+    text-decoration: line-through;
+}
+
+.list-group .list-group-item.important {
+    background-color: yellow;
+}

@@ -1,0 +1,15 @@
+.todo-list-item {
+    font-size: 1.25rem;
+}
+
+.todo-list-item button {
+    margin: 3px;
+}
+
+.todo-list-item-label {
+    line-height: 35px;
+    cursor: pointer;
+    user-select: none;
+    overflow-wrap: break-word;
+}
+
