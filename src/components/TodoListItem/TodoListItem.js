@@ -20,7 +20,7 @@ const TodoListItem = ({ label, onToggleImportant, onToggleDone, onDelete }) => {
 
             <button 
                 type = "button"
-                className = "btn btn-outline-success btn-sm float-right"
+                className = "btn btn-outline-success btn-sm float-left"
                 onClick = { onToggleImportant }>
                 !
             </button>

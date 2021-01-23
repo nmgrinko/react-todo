@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 
+import './App.css';
+
 import AppHeader from '../AppHeader';
 import TodoList from '../TodoList';
 import SearchPanel from '../SearchPanel';
@@ -8,21 +10,19 @@ import ItemStatusFilter from '../ItemStatusFilter';
 import ItemAddForm from '../ItemAddForm';
 import Loading from '../Loading';
 
-import API from '../../utils/API';
 import {  
-    GET_TODO,        
+    GET_TODO,
+    PUT_TODO,        
     SET_ITEM,  
     RECEIV_FILTER,    
     RECEIV_SEARCH 
-} from '../../store/actions' 
-
-
-import './App.css';
+} from '../../store/actions'; 
 
 
 const App = (props) => {
     const { 
-        GET_TODO, 
+        GET_TODO,
+        PUT_TODO, 
         SET_ITEM, 
         RECEIV_FILTER, 
         RECEIV_SEARCH,
@@ -128,17 +128,12 @@ const App = (props) => {
     const doneCount = items.filter((item) => item.done).length;
     const toDoCount = items.length - doneCount;
     const visibleItems = searchItems(filterItems(items, filter), search);
-
+    
     useEffect(() => {
-            try {
-                API.put('/', {
-                state: { ...state }
-                })
-            } catch (error) {
-                console.log(error);
-            }
-        }
-    ); 
+        if(state.server) {
+            PUT_TODO(state)
+        }   
+    }); 
  
     if(get) {
         GET_TODO();
@@ -179,7 +174,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
-    GET_TODO,        
+    GET_TODO,
+    PUT_TODO,        
     SET_ITEM,  
     RECEIV_FILTER,    
     RECEIV_SEARCH,

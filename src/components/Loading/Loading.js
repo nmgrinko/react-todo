@@ -9,6 +9,7 @@ let Loading = ({ loading }) => (
             <div className = "lds-double-ring">
                 <div></div>
                 <div></div>
+                <div></div>
             </div>
         </div>:
     null

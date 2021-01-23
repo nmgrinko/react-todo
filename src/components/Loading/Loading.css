@@ -41,14 +41,11 @@
 }
 
 .lds-css {
-    margin: 0 auto;
     background-color: inherit;
-    padding-left: calc((540px - 180px) / 2 );
 }
 
 .lds-double-ring {
-    position: relative;
-    left: 4rem;;
+    margin: 0 auto;
 }
 .lds-double-ring div {
     position: absolute;
@@ -58,7 +55,7 @@
     left: 20px;
     border-radius: 50%;
     border: 8px solid #000;
-    border-color: #3d7ec0 transparent #3d7ec0 transparent;
+    border-color: #fff transparent #fff transparent;
     -webkit-animation: lds-double-ring 1.5s linear infinite;
     animation: lds-double-ring 1.5s linear infinite;
 }
@@ -67,10 +64,20 @@
     height: 140px;
     top: 30px;
     left: 30px;
-    border-color: transparent #cc4545 transparent #cc4545;
+    border-color: transparent #e42727 transparent #e42727;
     -webkit-animation: lds-double-ring_reverse 1.5s linear infinite;
     animation: lds-double-ring_reverse 1.5s linear infinite;
 }
+.lds-double-ring div:nth-child(3) {
+    width: 120px;
+    height: 120px;
+    top: 40px;
+    left: 40px;
+    border-color: transparent #fff transparent #fff;
+    -webkit-animation: lds-double-ring_reverse 1.5s linear infinite;
+    animation: lds-double-ring 1.5s linear infinite;
+}
+
 .lds-double-ring {
     width: 77px !important;
     height: 77px !important;
