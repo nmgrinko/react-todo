@@ -10,4 +10,4 @@ npm install
 npm start
 ```
 
-[Demo](https://react-todo-2021.s3.amazonaws.com/index.html)
+[Demo](https://nmgrinko.github.io/react-todo/)
