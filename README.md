@@ -2,7 +2,7 @@
 
 ### Install
 ```bash
-npm start
+npm install
 ```
 
 ### Usage
