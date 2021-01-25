@@ -2,29 +2,42 @@ import React from 'react';
 
 import './TodoListItem.css';
 
-const TodoListItem = ({ label, onToggleImportant, onToggleDone, onDelete }) => {
+const TodoListItem = ({ 
+    id, 
+    className, 
+    label, 
+    onToggleImportant, 
+    onToggleDone, 
+    onDelete, 
+    onEditItemLabel 
+    }) => {
 
     return (
-        <span className = "todo-list-item" >
-            <span
-                className = "todo-list-item-label"
-                onClick = { onToggleDone }>{ label }
-            </span>
-
+        <div className = "todo-list-item" >
             <button 
                 type = "button"
-                className = "btn btn-outline-danger btn-sm float-right "
+                className = "button-important"
+                onClick = { onToggleImportant }>
+            </button>
+            <div 
+                className = { className }
+                onClick = { onToggleDone }
+                id = { id }>
+                
+                { label }
+                
+            </div>
+            <button 
+                type = "button"
+                onClick = { onEditItemLabel }>
+                edit
+            </button>
+            <button 
+                type = "button"
                 onClick = { onDelete }>
                 delete
-            </button>
-
-            <button 
-                type = "button"
-                className = "btn btn-outline-success btn-sm float-left"
-                onClick = { onToggleImportant }>
-                !
-            </button>
-        </span>
+            </button>  
+        </div>
     );
 };
 

@@ -1,19 +1,20 @@
-const DragAndDrop = ({ classNames, idListGroup, children, changeValueItem }) => {
+const DragAndDrop = ({ classNamelabel, idListGroup, onDragAndDrop, children }) => {
 
-    const classNameListGroupItems = classNames.split(' ')[0];
+    const classNameListGroupItems = classNamelabel.split(' ')[0];
 
     const onDragStart = (evt) => {
-        evt.target.classList.add('selected');
+        const li = evt.target.querySelector(`.${classNameListGroupItems}`);
+        li.classList.add('selected');
     };
 
     const onDragEnd = (evt) => {
-        evt.target.classList.remove('selected');
+        const li = evt.target.querySelector(`.${classNameListGroupItems}`);
+        li.classList.remove('selected');  
     };
 
     const getNextElement = (cursorPosition, currentElement) => {
         const currentElementCoord = currentElement.getBoundingClientRect();
         const currentElementCenter = currentElementCoord.y + currentElementCoord.height / 2;
-        
         const nextElement = (cursorPosition < currentElementCenter) ?
           currentElement :
           currentElement.nextElementSibling;
@@ -27,7 +28,7 @@ const DragAndDrop = ({ classNames, idListGroup, children, changeValueItem }) => 
         const tasksListElement = evt.target.closest(`#${idListGroup}`);
         const activeElement = tasksListElement.querySelector('.selected');
         const currentElement = evt.target;
-
+       
         const isMoveable = (activeElement !== currentElement) &&
         currentElement.classList.contains(classNameListGroupItems);
 
@@ -44,19 +45,17 @@ const DragAndDrop = ({ classNames, idListGroup, children, changeValueItem }) => 
           ) {
             return;
           };
-
-        tasksListElement.insertBefore(activeElement, nextElement);
+          
+          onDragAndDrop(activeElement.id, nextElement.id);
     }
 
 
-
     return (
-        <li className = { classNames } 
+        <li className = 'list-group-item' 
             draggable = "true"
             onDragStart = { onDragStart }
             onDragEnd = { onDragEnd }
-            onDragOver = { onDragOver }
-            onDoubleClick = { changeValueItem }>
+            onDragOver = { onDragOver }>
 
             {children}
 

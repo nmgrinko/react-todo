@@ -3,13 +3,10 @@ import API from '../../utils/API';
 
 
 function* fetchTodoGet() {
-    try {
-        const response = yield API.get('/');
-        yield put({ type: "TODO_RECEIVED", data: { ...response.data.state }});
-    } catch (error) {
-        alert('Server is not available! Please update page :)');
-        console.log('Server is not available!', error);
-    }
+    const response = yield API.get('/');
+    response.data ?
+        yield put({ type: "TODO_RECEIVED", data: { ...response.data.state }}):
+        yield put({ type: "TODO_RECEIVED", data: { }})
 }
 
 function* actionWatcherGet() {

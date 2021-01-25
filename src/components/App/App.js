@@ -19,6 +19,8 @@ import {
 } from '../../store/actions'; 
 
 
+let timeRender = 0
+
 const App = (props) => {
     const { 
         GET_TODO,
@@ -31,7 +33,11 @@ const App = (props) => {
     const state = props.state;
     const { items, filter, search } =  props.state;
 
-    const [get, setGet] = useState(true)
+    const [get, setGet] = useState(true);
+
+    const initialAddToSave = {label: '', flag: true};
+    const [stateForm, setStateForm] = useState(initialAddToSave);
+
 
     const onItemAdded = (label) => {
         const result = (state) => {
@@ -77,6 +83,7 @@ const App = (props) => {
               ...state.items.slice(0, idx),
               ...state.items.slice(idx + 1)
             ];
+            setStateForm(initialAddToSave);
             return items
         }
         SET_ITEM(result(state));
@@ -119,26 +126,54 @@ const App = (props) => {
         });
     };
 
-    const changeValueItem = (id) => {
-        const input = document.querySelector('.new-todo-label');
+    const onEditItemLabel = (id) => {
         const value = items.find((item) => item.id === id ).label;
-        input.value = value;
+        setStateForm({label: value, flag: false, id: id});
     }
+    
+    const onSaveItemLabel = ({label, id}) => {
+        const newItems = items.slice();
+        const index = newItems.findIndex((item) => item.id === id );
+        newItems[index].label = label;
+        setStateForm(initialAddToSave);
+    };
 
     const doneCount = items.filter((item) => item.done).length;
     const toDoCount = items.length - doneCount;
     const visibleItems = searchItems(filterItems(items, filter), search);
     
+    const onDragAndDrop = (idActiveItem, idNextItem) => {
+        const newItems = items.slice();
+        const indexActiveItem = items.findIndex(item => (item.id === +idActiveItem))
+        const indexNextItem = items.findIndex(item => (item.id === +idNextItem))
+        if ((indexActiveItem !== -1) && (indexNextItem !== -1)) {
+        
+        const ActiveItem = items[indexActiveItem];
+        const NextItem = items[indexNextItem];
+        
+        newItems[indexActiveItem] = NextItem;
+        newItems[indexNextItem] = ActiveItem;
+        
+        SET_ITEM(newItems);
+    }};
+
     useEffect(() => {
+        const time = Date.now() - timeRender;
         if(state.server) {
-            PUT_TODO(state)
-        }   
+            if(time > 100) {
+                PUT_TODO({items: state.items});
+            } 
+        } 
+        timeRender = Date.now();
     }); 
  
     if(get) {
         GET_TODO();
         setGet(!get);
     };
+    
+    
+    
 
     return (
         <div className = "todo-app">
@@ -146,7 +181,7 @@ const App = (props) => {
 
             <div className = "search-panel d-flex">
                 <SearchPanel
-                    onSearchChange = { onSearchChange }/>
+                    onSearchChange = { onSearchChange } />
 
                 <ItemStatusFilter
                     filter = { filter }
@@ -158,9 +193,13 @@ const App = (props) => {
                 onToggleImportant = { onToggleImportant }
                 onToggleDone = { onToggleDone }
                 onDelete = { onDelete } 
-                changeValueItem = { changeValueItem } />
+                onEditItemLabel = { onEditItemLabel }
+                onDragAndDrop = { onDragAndDrop } />
 
             <ItemAddForm
+                stateForm = { stateForm }
+                onDelete = { onDelete }
+                onSaveItemLabel = { onSaveItemLabel }
                 onItemAdded = { onItemAdded } />
 
             <Loading />

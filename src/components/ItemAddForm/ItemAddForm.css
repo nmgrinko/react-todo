@@ -7,3 +7,15 @@
     flex-grow: 1;
     margin-right: 3px;
 }
+
+.bottom-panel button {
+    width: 65px;
+}
+
+.form-control:focus {
+    color: #000;
+}
+
+.form-control {
+    color: #000;
+}
