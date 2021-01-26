@@ -1,7 +1,6 @@
 .todo-list-item {
     display: flex;
     flex-direction: row;
-    font-size: 1.25rem;
 }
 
 .todo-list-item-label {
